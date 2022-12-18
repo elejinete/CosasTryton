@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Configuración Inicial Tryton - Cosas de Tryton</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Configuraci\u00f3n Inicial Tryton";
+        var mkdocs_page_input_path = "ConfiguracionInicialTryton.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Cosas de Tryton
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Nivel usuario</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../proyectos/">Proyectos</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../proyectos/">Proyectos</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Nivel administrador</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../PlantillaFacturas/">Plantilla facturas</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Montando un Servidor Tryton</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../InstalarTryton_con_Docker/">Instalar Tryton con Docker</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../DOCKER/">Copias Seguridad y rearranque Docker</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Configuración Inicial Tryton</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Servidor_nginx_cerbot_https/">Servidor HTTPS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Mail/">Configurar el envio de Mails en Tryton</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Cosas de Tryton</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>Montando un Servidor Tryton &raquo;</li>
+      <li>Configuración Inicial Tryton</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <p>Con los contenedores de Docker en run ya podemos conectarnos al servidor mediante la IP y el puerto 8000.</p>
+<p>Inmediatamente Tryton comienza el asistente de la instalación.</p>
+<p>Instalamos lo módulos
+Configuramos ojo creamos la Moneda el factor de redondeo 0.01 digitos 2</p>
+<p>Es probable que si no instalamos los países con sus provincias al importar los terceros nos puede dar error al intentar ligar con la base de datos.
+Una vez Instalado los contenedores podemos instalar los paises con el siguiente comando.
+docker exec --interactive --tty tryton /entrypoint.sh python3 -m trytond.modules.country.scripts.import_countries -d tryton
+También hay que cargar los idiomas por ejemplo Spanish para poder asignar a los usuarios su idioma regional.
+Para ello en Administration&gt;Users&gt;Localization&gt;Languages
+Buscamos el idioma Clikamos y ejecutamos el translation quizás para poder seleccionar el nuevo lenguaje hay que logearse con el usuario en cuestión y el el menu Administration&gt;User seleccionamos nuestro propio usuario y en la pestaña Preferences abrimos el list Languajes y selecionamos Spanish.
+La moneda la podemos instalar a mano ya que solo usamos euros.</p>
+<p>Despues de editar hay que iniciar los periodos Fiscal years.
+Para ello tenemos que asignar un nombre al periodo un día de inicio y final 1 de enero y 31 de diciembre
+En la pestaña Secuences hay que crear Post Move Secuence, Supplier Invoice Sequence, Supplier Credit Note Sequence, Customer Invoice Sequence, Customer Credit Note Sequence.
+Una vez creadas estas secuencias se nos mostrarán en Administration &gt; Secuences</p>
+<blockquote>
+<p>Secuences Strict Aqui podemos personalizar el número que nos da a las facturas emitidas.</p>
+</blockquote>
+<p>Posteriormente a iniciar los periodos ejecutar el asistente para incorporar el plan general.</p>
+<p>Notas en 
+Moneda el factor de redondeo 0.01 digitos 2
+En &gt;User Interface &gt; Actions &gt; Reports Podemos descargar y subir los modelos de OpenOffice.
+Importante cuando generamos una factura consolildada el modelo report usado en ese momento se congela para esa factura consolidada. Esto quiere decir que al cambiar el report invoice solo se aplicara a nuevas facturas.</p>
+<p>En &gt;Administracion &gt; Secuences&gt; Customer Secuence y Suplier Secuence definir los números para empezar las facturas.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../DOCKER/" class="btn btn-neutral float-left" title="Copias Seguridad y rearranque Docker"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Servidor_nginx_cerbot_https/" class="btn btn-neutral float-right" title="Servidor HTTPS">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../DOCKER/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../Servidor_nginx_cerbot_https/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

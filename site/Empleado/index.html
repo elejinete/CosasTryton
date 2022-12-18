@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Empleado - Cosas de Tryton</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Empleado";
+        var mkdocs_page_input_path = "Empleado.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Cosas de Tryton
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Nivel usuario</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../proyectos/">Proyectos</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../proyectos/">Proyectos</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Nivel administrador</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../PlantillaFacturas/">Plantilla facturas</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Montando un Servidor Tryton</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../InstalarTryton_con_Docker/">Instalar Tryton con Docker</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../DOCKER/">Copias Seguridad y rearranque Docker</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ConfiguracionInicialTryton/">Configuración Inicial Tryton</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Servidor_nginx_cerbot_https/">Servidor HTTPS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Mail/">Configurar el envio de Mails en Tryton</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Cosas de Tryton</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Empleado</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <p>SISTENCIA EMPLEADO.
+ATTENDANCE EMPLOYER</p>
+<p>Para crear un nuevo empleado con la opción de logerse y poder fichar la presencia en el trabajo.
+1- Creamos el empleado como tercero.
+2- Asignamos este tercero como empleado en empresas nuevo empleado 
+3- Administration / Users creamos un nuevo usuario de Login y en la parte inferior lo ligamos con la empresa y con el empleado. Asignamos la contraseña. </p>
+<p>Funcionamiento a nivel de empleado.</p>
+<p>Configurar usuarios con menos privilegios
+I have the same problem.
+I have tried several ways and finally I have done the following:
+first I created a User only to used to attendance application.
+For that, we register a new login user and assign it to a new party (Employer) with the same name. When you login on user you have a generic tree of icons that you can see. This is because some items in the tree do not have a group assigned, and that is what a new user can see (not group assigned then you can see the icon with user without privileges) .</p>
+<p>Second I need to clear items tree to the user.</p>
+<p>So I create a group in &gt;Administration &gt; User &gt; Groups called for example “standard user”
+I go to “User Interface” &gt; Menu and selecting the initial icons of the tree Party, product etc. and change to empty group to the new created group “Standard User”. Once all items the items without group are assigned to “Standard User” the user without group, have an empty session without an item tree.</p>
+<p>Third I need assigned to user attendance icon
+I create a new group to manage the access to my user for that I duplicate Shift+Crtl+D the group (attendance administration) group and name the new group like as (employer attendance)
+I assign in Administration &gt; User &gt; Users the new user to the group created (employer attendance). Also I need to assigned on Administration &gt; User Interface &gt; Menu Icon attendance to (group attendance employer) Now have two groups (Employer Attendance) and ((Employer)*see first point)
+Now, the user only sees the Attendance icon in the tree but because we duplicate the attendance administrator group profile, the user have the configuration option on the tree. To remove this privilege I go to Administration &gt; User &gt; Groups and I select the new group created (attendance employer) group and in the tab [Access Menu] tab I remove the configuration icon Attendance/configuration.
+Now everything seems ok I have a user who only sees the attendance icon when login, but, I have a problem. The user also sees other parties and if he clicks on the party, he accesses the information of the party, address, telephone, etc.
+To limit access to third-party information I go to Administration &gt; User &gt; Groups and click to the new group employer attendance and on the [access permissions] tab and sub-tab [access models] I have added the party model with the read box unchecked. Save and now, the user sees the lines of the other users but, when clicking on the party it does not show information about it.
+I don`t now if is correct because I rookie on Tryton but works for me.
+Be caution not applied groups with less privileges to ADMIN USER</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

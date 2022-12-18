@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Instalar Tryton con Docker - Cosas de Tryton</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Instalar Tryton con Docker";
+        var mkdocs_page_input_path = "InstalarTryton_con_Docker.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Cosas de Tryton
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Nivel usuario</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../proyectos/">Proyectos</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../proyectos/">Proyectos</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Nivel administrador</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../PlantillaFacturas/">Plantilla facturas</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Montando un Servidor Tryton</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Instalar Tryton con Docker</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#resumen-de-los-comandos-usados-para-crear-nuestro-servidor-tryton-con-docker">Resumen de los comandos usados para crear nuestro servidor Tryton con Docker</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../DOCKER/">Copias Seguridad y rearranque Docker</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ConfiguracionInicialTryton/">Configuración Inicial Tryton</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Servidor_nginx_cerbot_https/">Servidor HTTPS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Mail/">Configurar el envio de Mails en Tryton</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Cosas de Tryton</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>Montando un Servidor Tryton &raquo;</li>
+      <li>Instalar Tryton con Docker</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <p>I am starting to experiment with the docker image. While I am doing so, I will write step-by-step instructions.<br />
+I have no previous experience of Docker and little knowledge of Tryton, so I will need help.<br />
+The following is a starting point. Would you like me to put this somewhere official?</p>
+<h2 id="como-usar-la-imagen-de-docker-tryton-para-instalar-un-servidor-de-tryton">Como usar la imagen de Docker Tryton para instalar un servidor de Tryton</h2>
+<p><a href="https://hub.docker.com/r/tryton/tryton/">Pagina oficial para de como  instalar Tryton con Docker</a> Previamente hay que tener instalado Docker en el ordenador. </p>
+<p>Descargamos la imagen de Tryton <code>sudo docker pull tryton/tryton</code> con sudo</p>
+<p>“Start a PostgreSQL instance”<br />
+<code>sudo docker run --name tryton-postgres -e POSTGRES_PASSWORD=mysecretpassword -e POSTGRES_DB=tryton -d postgres</code><br />
+“Setup the database”<br />
+<code>sudo docker run --link tryton-postgres:postgres -it tryton/tryton trytond-admin -d tryton --all</code>  </p>
+<p>Ejecutando la preparacion de la base de datos nos pide el mail y la contraseña:<br />
+    ◦ "admin" email for "tryton": your_email@blah.com<br />
+    ◦ “admin” password for “tryton”: a_strong_password  </p>
+<p>Arrancamos Tryton 
+<code>sudo docker run --name tryton -p 8000:8000 --link tryton-postgres:postgres -d tryton/tryton</code></p>
+<p>Podemos conectarnos en este punto a Tryton http://localhost:8000/<br />
+    • No muestra un cuadro de entrada a Tryton en el Navegador
+    ◦ Database: tryton<br />
+    ◦ User name: admin<br />
+    ◦ Pulsar login<br />
+    • Nos pide la password. 
+    • Metemos la password introduccida en la creacion de la base de datos.</p>
+<p>Arrancar a Tryton cron instance<br />
+No tengo claro para que sirve este arranque ya que parece que sin el funciona Tryton</p>
+<p>This is the dedicate cron part of the server (http://manpages.ubuntu.com/manpages/bionic/man1/trytond-cron.1.html).
+<code>sudo docker run --name tryton-cron --link tryton-postgres:postgres -d tryton/tryton trytond-cron -d</code></p>
+<p>Arrancando los contenedores Docker despues de un rearranque del ordenador.<br />
+Con el comando ls vemos los contenedores Docker:<br />
+sudo docker container ls --all<br />
+OR
+sudo docker ps --all<br />
+Para arrancar Tryton necesitamos arrancar los 3 contenedores asociados a el:  </p>
+<p><code>sudo docker start tryton-postgres tryton tryton-cron</code><br />
+El orden es importante primero arranca el servidor Postgres luego el servidor Tryton y por último Cron.  </p>
+<h3 id="resumen-de-los-comandos-usados-para-crear-nuestro-servidor-tryton-con-docker">Resumen de los comandos usados para crear nuestro servidor Tryton con Docker</h3>
+<pre><code>sudo docker pull tryton/tryton
+
+sudo docker run --name tryton-postgres -e POSTGRES_PASSWORD=xxxxxxx -e POSTGRES_DB=tryton -d postgres
+
+sudo docker run --link tryton-postgres:postgres -e DB_PASSWORD=xxxxxxx -it tryton/tryton trytond-admin -d tryton –all
+
+sudo docker run --name tryton -p 8000:8000 --link tryton-postgres:postgres -e DB_PASSWORD=xxxxxxx -d tryton/tryton
+</code></pre>
+<p>Ya te puedes conectar a Tryton en este punto</p>
+<pre><code>sudo docker run --name tryton-cron --link tryton-postgres:postgres -d tryton/tryton trytond-cron -d tryton
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../PlantillaFacturas/" class="btn btn-neutral float-left" title="Plantilla facturas"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../DOCKER/" class="btn btn-neutral float-right" title="Copias Seguridad y rearranque Docker">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../PlantillaFacturas/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../DOCKER/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

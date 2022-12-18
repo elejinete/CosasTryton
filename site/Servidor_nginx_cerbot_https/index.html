@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Servidor HTTPS - Cosas de Tryton</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Servidor HTTPS";
+        var mkdocs_page_input_path = "Servidor_nginx_cerbot_https.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Cosas de Tryton
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Nivel usuario</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../proyectos/">Proyectos</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../proyectos/">Proyectos</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Nivel administrador</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../PlantillaFacturas/">Plantilla facturas</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Montando un Servidor Tryton</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../InstalarTryton_con_Docker/">Instalar Tryton con Docker</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../DOCKER/">Copias Seguridad y rearranque Docker</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ConfiguracionInicialTryton/">Configuración Inicial Tryton</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Servidor HTTPS</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#instalar-nginx">Instalar Nginx</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#actualizamos-lista-de-paquetes">Actualizamos lista de paquetes</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#instalamos-nginx">Instalamos Nginx</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#configurar-nginx">Configurar Nginx</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#renovar-los-certificados-de-lets-encrypt">Renovar los certificados de Let's Encrypt</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Mail/">Configurar el envio de Mails en Tryton</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Cosas de Tryton</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>Montando un Servidor Tryton &raquo;</li>
+      <li>Servidor HTTPS</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="servidor-https-para-acceder-a-tryton-desde-internet">Servidor HTTPS para acceder a Tryton desde Internet.</h1>
+<h2 id="instalar-nginx">Instalar Nginx</h2>
+<p>Lo primero que hemos hecho ha sido instalar Nginx que es super fácil porque ya viene por defecto en la mayorí­a de distribuciones Linux. En la mayorí­a de distribuciones basadas en Debian lo haremos con el siguiente comando(Primero hacemos un 'update' para actualizar la lista de paquetes):</p>
+<h2 id="actualizamos-lista-de-paquetes">Actualizamos lista de paquetes</h2>
+<p>apt-get update</p>
+<h2 id="instalamos-nginx">Instalamos Nginx</h2>
+<p><code>apt-get install -y nginx</code>
+Una vez instalamos hemos arrancado el servicio para comprobar que estaba funcionando:
+<code>service nginx start</code>
+Después hemos parado el servicio porque con el servicio Nginx corriendo no podrí­amos contratar el certificado de seguridad:
+<code>service nginx stop</code></p>
+<p>Contratar el certificado de seguridad SSL con Let's encrypt
+Para contratar el certificado de seguridad primero deberemos instalar "certbot" que es la herramienta para gestionar los certificados de seguridad (Esta herramienta también viene por defecto en la mayorí­a de distribuciones Linux): 
+<code>apt-get install -y certbot</code>
+Y ahora que ya tenemos la herramienta instalada podemos solicitar el certificado con un solo comando y sin que se nos pida nada adicional (Ideal para automatizar procesos de devops):</p>
+<pre><code>certbot certonly \
+    -d midominio.com \
+    --noninteractive \
+    --standalone \
+    --agree-tos \
+    --register-unsafely-without-email
+</code></pre>
+<p>Como se comenta en el ví­deo, certbot permite varios métodos para pedir el certificado, en nuestro caso vamos a usar <code>--standalone</code> que básicamente crear un servidor web interno para validar el dominio (Ese es el motivo por el que no podemos tener arrancado Nginx).
+También le ponemos le activamos el modo no interactivo y le configuramos todo lo que nos va a pedir el script por defecto. De esta manera podemos usar este script para automatizar procesos de aprovisionamiento.</p>
+<h3 id="configurar-nginx">Configurar Nginx</h3>
+<p>Ahora que ya tenemos nuestros certificados ya podemos configurarlos donde sea, en este caso, en un servidor Nginx. Para ellos modificamos el fichero '/etc/nginx/sites-available/default' que contiene el 'site' por defecto en Nginx:</p>
+<pre><code>    server {
+        listen 80 default_server;
+        return 301 https://$host$request_uri;
+        }
+    server {
+        listen 443 ssl;
+        ssl_certificate     /etc/letsencrypt/live/test2.albertcoronado.com/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/test2.albertcoronado.com/privkey.pem;
+        ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+        ssl_ciphers         HIGH:!aNULL:!MD5;
+        root /var/www/html;
+        index index.html index.htm index.nginx-debian.html;
+        location / {
+            try_files $uri $uri/ =404;
+            }
+        }
+</code></pre>
+<p>Aquí­, básicamente lo que hacemos en configurar para que todas las llamadas por el puerto 80(http) sean redirigidas al puerto 443(https). El puerto 443, queda configurado como estaba el puerto 80 por defecto pero aí±adiendo las lí­neas que configuran el certificado SSL.
+Acordaos que cada vez que hacéis cambios en este archivo hay que reiniciar el servicio de Nginx. </p>
+<h3 id="renovar-los-certificados-de-lets-encrypt">Renovar los certificados de Let's Encrypt</h3>
+<p>Los certificados de Let's Encrypt caducan cada seis meses, para renovarlos solo hay que ejecutar el siguiente comando:
+<code>sudo certbot renew</code>
+OJO previamente tenemos que tener el servidor parado por lo cual
+<code>sudo systemctl stop nginx</code>
+Recordad que se debe ejecutar este comando con el Nginx parado para que "certbot" pueda validar que realmente el dominio es vuestro.</p>
+<pre><code>    sudo certbot certonly \
+    -d *******mydominio.com \
+    --noninteractive \
+    --standalone \
+    --agree-tos \
+    --register-unsafely-without-email
+</code></pre>
+<p>-
+    Texto a cargar en el fichero default de nginx</p>
+<pre><code>    server {
+        listen 80 default_server;
+        return 301 https://$host$request_uri;
+        }
+    server {
+        listen 443 ssl;
+        ssl_certificate     /etc/letsencrypt/live/tryton.rdiautomatizacion.com/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/tryton.rdiautomatizacion.com/privkey.pem;
+        ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+        ssl_ciphers         HIGH:!aNULL:!MD5;
+     #       root /var/www/html;
+     #       index index.html index.htm index.nginx-debian.html;
+    #        location / {
+    #                try_files $uri $uri/ =404;
+    #                }
+     location / { proxy_pass http://127.0.0.1:8000;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $host; }
+        }
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../ConfiguracionInicialTryton/" class="btn btn-neutral float-left" title="Configuración Inicial Tryton"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Mail/" class="btn btn-neutral float-right" title="Configurar el envio de Mails en Tryton">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../ConfiguracionInicialTryton/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../Mail/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Proyectos - Cosas de Tryton</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Proyectos";
+        var mkdocs_page_input_path = "proyectos.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Cosas de Tryton
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Nivel usuario</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="./">Proyectos</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Proyectos</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#proyectos">Proyectos:</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ejemplo">Ejemplo:</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Nivel administrador</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../PlantillaFacturas/">Plantilla facturas</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Montando un Servidor Tryton</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../InstalarTryton_con_Docker/">Instalar Tryton con Docker</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../DOCKER/">Copias Seguridad y rearranque Docker</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ConfiguracionInicialTryton/">Configuración Inicial Tryton</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Servidor_nginx_cerbot_https/">Servidor HTTPS</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Mail/">Configurar el envio de Mails en Tryton</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Cosas de Tryton</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>Nivel usuario &raquo;</li>
+      <li>Proyectos</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="proyectos-en-tryton">Proyectos en Tryton</h1>
+<p>Tryton Versión 6.x  Funcionamiento del módulo de Proyecto.
+<a href="https://docs.tryton.org/projects/modules-project/en/latest/usage.html">Explicación en la página oficial del modulo Proyecto</a></p>
+<p>Primero tenemos que tener instalado el módulo.</p>
+<p><img alt="Images/Modulo_Proyecto.png" src="../Images/Modulo_Proyecto.png" /></p>
+<p>El módulo proyecto nos permite relacionar las tareas con los partes de trabajo <code>timesheet module</code> Podemos crear partes de trabajo (Timesheet) sin usar el módulo proyecto, pero idealmente lo haremos desde la opción de proyecto. Usamos el módulo proyecto ya que de esta manera podemos controlar subtareas y controlar costes de materiales.</p>
+<h2 id="proyectos">Proyectos:</h2>
+<pre><code>Proyectos
+    &gt;Configuración
+        &gt;Arbol de proyectos y tareas # En este apartado nos da una visión general de todos los proyectos y sus caracteristicas
+            &gt;Proyectos y tareas # En este apartado nos muestra todos los proyectos y tareas
+        &gt;Estado del trabajo
+    &gt;Proyectos # En este apartado nos da una visión general de todos los proyectos y sus caracteristicas
+    &gt;Tareas
+    &gt;Informes
+        &gt;Arbol de proyectos y tareas #
+</code></pre>
+<p>Como primer paso ejecutamos crear en [Proyectos &gt; Arbol de proyectos] y tareas un nuevo proyecto.</p>
+<p>Asignamos el Nombre y el Tipo que puede ser proyecto o tarea en principio Elegimos ''proyecto'', la empresa ya estará rellenada, en tercero podemos seleccionar o no un cliente al cual facturaremos. Seguidamente en la pestaña Hijos Vamos añadiendo <strong>tareas</strong> poniendo un nombre y activando la casilla de [Hoja de Trabajo] [x] de este modo las líneas de tareas que creemos se irán añadiendo en el módulo Partes de trabajo (Timesheet) automaticamente.
+<font color="red"></p>
+<blockquote>
+<p>Nota<br />
+Las tareas no se pueden asignar a un cliente, los proyectos si.<br />
+Si queremos asignar gastos de material a los proyectos es necesario coger los datos de las peticiones de compras no se puede de las facturas de compra.<br />
+</font></p>
+</blockquote>
+<p>Una vez creamos las tareas dentro del proyecto estas estarán disponibles en el módulo (Timesheet) Partes de trabajo. Podemos visualizarlo en Partes de trabajo &gt; Configuración &gt; Trabajos.</p>
+<h2 id="ejemplo">Ejemplo:</h2>
+<p>Creamos un proyecto y dejamos los campos sin rellenar a excepción de el nombre del proyecto y en Tipo especificar proyecto.
+Inmediatamente creamos los procesos Hijos que es realmente lo que podemos facturar. Los hijos los creamos como tareas.
+Rellenamos el esfuerzo estimado para la tarea en tiempo Horas:Minutos:Segundos
+En la ventana trabajo asociamos con un item de trabajo el cual podemos crear en el momento y el cual le volcaremos las horas a través del menú en el arbolPartes de trabajo &gt; Añadir parte de trabajo.
+En el campo producto le asociamos un producto que podemos crear en el momento al cual le damos un valor por unidad por Ejem 25€ unidad con lo cual el importe a facturar por la tarea acabada es el esfuerzo en horas multiplicado por el valor del producto. 
+<font color="red"></p>
+<blockquote>
+<p>Nota<br />
+El producto que asociemos a la tarea tiene que ser de tipo servicio si no dara error de campo de dominio no corresponde.<br />
+Importante En el producto la unidad de medida tienen que ser HORAs no unidades.<br />
+</font></p>
+</blockquote>
+<p>Por ejemplo esfuerzo estimado 20 horas x ((Valor producto) Horas de diseño a 60€ hora) el importe a facturar es 1200€.
+Ojo tenemos que tener en la pestaña General del Proyecto principal el valor Método de facturación por [Según proceso]. Cuando la tarea Hijo llegue al valor del 100% del progreso el botón Factura en la pestaña General del proyecto principal se nos activara para poder Facturar.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="./" class="btn btn-neutral float-left" title="Proyectos"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../PlantillaFacturas/" class="btn btn-neutral float-right" title="Plantilla facturas">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="./" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../PlantillaFacturas/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
