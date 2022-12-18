@@ -1,0 +1,19 @@
+site_name: Cosas de Tryton
+
+nav:
+    - Home: index.md
+    - Nivel usuario:
+        - Proyectos: proyectos.md 
+        - Proyectos: proyectos.md
+
+    - Nivel administrador:
+            - Plantilla facturas: PlantillaFacturas.md
+    - Montando un Servidor Tryton:
+            - Instalar Tryton con Docker: InstalarTryton_con_Docker.md
+            - Copias Seguridad y rearranque Docker: DOCKER.md
+            - Configuración Inicial Tryton: ConfiguracionInicialTryton.md
+            - Servidor HTTPS: Servidor_nginx_cerbot_https.md
+            - Configurar el envio de Mails en Tryton: Mail.md
+                        
+
+theme: readthedocs
